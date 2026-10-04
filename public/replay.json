@@ -1,0 +1,415 @@
+{
+  "recorded": "2026-10-04T19:02:16.015Z",
+  "steps": [
+    {
+      "user": "Answering new client inquiries for my consulting work. Done means they get a useful reply, and a call on my calendar if they are a fit.",
+      "say": "Got it, handling client inquiries and booking calls. What starts this work? For example, an email landing, a form status changing, or someone pinging you in chat.",
+      "stage": "trigger",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "context": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "decisions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "actions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "exceptions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          }
+        },
+        "tools": "",
+        "shelf": "",
+        "gaps": "",
+        "test": "",
+        "success": ""
+      }
+    },
+    {
+      "user": "Someone fills out the form on my website, emails me, or calls and leaves a voicemail. Sometimes a past client tags me in a LinkedIn comment.",
+      "say": "Captured those four entry points. What information, rules, or past examples are needed to answer them well?",
+      "stage": "context",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "Website form, direct email, voicemail, LinkedIn mention",
+            "owner": "",
+            "reason": ""
+          },
+          "context": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "decisions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "actions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "exceptions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          }
+        },
+        "tools": "",
+        "shelf": "",
+        "gaps": "",
+        "test": "",
+        "success": ""
+      }
+    },
+    {
+      "user": "My list of services, my standard rates, the kinds of clients I take, any past emails with them, and my calendar.",
+      "say": "Got the background materials. What decisions must be made along the way, and what rules or thresholds do they depend on?",
+      "stage": "decisions",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "Website form, direct email, voicemail, LinkedIn mention",
+            "owner": "",
+            "reason": ""
+          },
+          "context": {
+            "text": "Services list, standard rates, client fit criteria, past emails, calendar",
+            "owner": "",
+            "reason": ""
+          },
+          "decisions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "actions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "exceptions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          }
+        },
+        "tools": "",
+        "shelf": "",
+        "gaps": "",
+        "test": "",
+        "success": ""
+      }
+    },
+    {
+      "user": "Whether they are a fit: budget over five thousand and a company with at least ten people. Which service matches their problem. And whether to book a call now or send them my guide first if they are early.",
+      "say": "Those fit thresholds make sense. What steps get taken, in what order, and in which apps?",
+      "stage": "actions",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "Website form, direct email, voicemail, LinkedIn mention",
+            "owner": "",
+            "reason": ""
+          },
+          "context": {
+            "text": "Services list, standard rates, client fit criteria, past emails, calendar",
+            "owner": "",
+            "reason": ""
+          },
+          "decisions": {
+            "text": "Fit: budget over $5k and 10+ staff; Service match: based on their problem; Next step: book call or send guide",
+            "owner": "",
+            "reason": ""
+          },
+          "actions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          },
+          "exceptions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          }
+        },
+        "tools": "",
+        "shelf": "",
+        "gaps": "",
+        "test": "",
+        "success": ""
+      }
+    },
+    {
+      "user": "Draft a reply in Gmail, add or update the contact in HubSpot, then send my booking link. After the call is booked, add a prep note to the calendar event.",
+      "say": "Logged the steps across Gmail, HubSpot, and calendar. When must the system stop and hand the work to you?",
+      "stage": "exceptions",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "Website form, direct email, voicemail, LinkedIn mention",
+            "owner": "",
+            "reason": ""
+          },
+          "context": {
+            "text": "Services list, standard rates, client fit criteria, past emails, calendar",
+            "owner": "",
+            "reason": ""
+          },
+          "decisions": {
+            "text": "Fit: budget over $5k and 10+ staff; Service match: based on their problem; Next step: book call or send guide",
+            "owner": "",
+            "reason": ""
+          },
+          "actions": {
+            "text": "Draft reply in Gmail; Log contact in HubSpot; Send booking link; Add prep note to calendar",
+            "owner": "",
+            "reason": ""
+          },
+          "exceptions": {
+            "text": "",
+            "owner": "",
+            "reason": ""
+          }
+        },
+        "tools": "",
+        "shelf": "",
+        "gaps": "",
+        "test": "",
+        "success": ""
+      }
+    },
+    {
+      "user": "Custom pricing questions, anyone who sounds upset, or when it is unclear what they actually want.",
+      "say": "Those handoff cases are clear. I have suggested an owner for each step on screen. Would you change any?",
+      "stage": "owners",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "Website form, direct email, voicemail, LinkedIn mention",
+            "owner": "ai",
+            "reason": "Inbound signals can be ingested and sorted automatically."
+          },
+          "context": {
+            "text": "Services list, standard rates, client fit criteria, past emails, calendar",
+            "owner": "ai",
+            "reason": "Reference documents and calendar data are easily queried by AI."
+          },
+          "decisions": {
+            "text": "Fit: budget over $5k and 10+ staff; Service match: based on their problem; Next step: book call or send guide",
+            "owner": "approve",
+            "reason": "Evaluating fit and recommendations is best reviewed before sending."
+          },
+          "actions": {
+            "text": "Draft reply in Gmail; Log contact in HubSpot; Send booking link; Add prep note to calendar",
+            "owner": "approve",
+            "reason": "Sending outbound emails to prospects should be approved first."
+          },
+          "exceptions": {
+            "text": "Custom pricing questions, upset tone, unclear needs",
+            "owner": "you",
+            "reason": "Edge cases and sensitive inquiries require human judgment."
+          }
+        },
+        "tools": "",
+        "shelf": "",
+        "gaps": "",
+        "test": "",
+        "success": ""
+      }
+    },
+    {
+      "user": "That looks right. Keep it.",
+      "say": "Ownership locked in. Which tools do you already use for this work today?",
+      "stage": "shelf",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "Website form, direct email, voicemail, LinkedIn mention",
+            "owner": "ai",
+            "reason": "Inbound signals can be ingested and sorted automatically."
+          },
+          "context": {
+            "text": "Services list, standard rates, client fit criteria, past emails, calendar",
+            "owner": "ai",
+            "reason": "Reference documents and calendar data are easily queried by AI."
+          },
+          "decisions": {
+            "text": "Fit: budget over $5k and 10+ staff; Service match: based on their problem; Next step: book call or send guide",
+            "owner": "approve",
+            "reason": "Evaluating fit and recommendations is best reviewed before sending."
+          },
+          "actions": {
+            "text": "Draft reply in Gmail; Log contact in HubSpot; Send booking link; Add prep note to calendar",
+            "owner": "approve",
+            "reason": "Sending outbound emails to prospects should be approved first."
+          },
+          "exceptions": {
+            "text": "Custom pricing questions, upset tone, unclear needs",
+            "owner": "you",
+            "reason": "Edge cases and sensitive inquiries require human judgment."
+          }
+        },
+        "tools": "",
+        "shelf": "",
+        "gaps": "",
+        "test": "",
+        "success": ""
+      }
+    },
+    {
+      "user": "Gmail, Google Calendar, and HubSpot.",
+      "say": "Gmail, Calendar, and HubSpot cover drafts, contacts, and meetings. For voicemail, you likely need a voice agent, such as ElevenLabs or HeyGen. To connect everything, you likely need an automation tool, such as Zapier, Make, or n8n. Ready for the test case?",
+      "stage": "shelf",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "Website form, direct email, voicemail, LinkedIn mention",
+            "owner": "ai",
+            "reason": "Inbound signals can be ingested and sorted automatically."
+          },
+          "context": {
+            "text": "Services list, standard rates, client fit criteria, past emails, calendar",
+            "owner": "ai",
+            "reason": "Reference documents and calendar data are easily queried by AI."
+          },
+          "decisions": {
+            "text": "Fit: budget over $5k and 10+ staff; Service match: based on their problem; Next step: book call or send guide",
+            "owner": "approve",
+            "reason": "Evaluating fit and recommendations is best reviewed before sending."
+          },
+          "actions": {
+            "text": "Draft reply in Gmail; Log contact in HubSpot; Send booking link; Add prep note to calendar",
+            "owner": "approve",
+            "reason": "Sending outbound emails to prospects should be approved first."
+          },
+          "exceptions": {
+            "text": "Custom pricing questions, upset tone, unclear needs",
+            "owner": "you",
+            "reason": "Edge cases and sensitive inquiries require human judgment."
+          }
+        },
+        "tools": "Gmail, Google Calendar, HubSpot",
+        "shelf": "Voice agent, such as ElevenLabs or HeyGen; Automation tool, such as Zapier, Make, or n8n",
+        "gaps": "Nothing, just connect the tools",
+        "test": "",
+        "success": ""
+      }
+    },
+    {
+      "user": "Yes, that works.",
+      "say": "Let's test with a mock form submission from a 15-person company with a $6,000 budget. The test passes if a draft reply and HubSpot contact appear for your review. Does that work?",
+      "stage": "test",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "Website form, direct email, voicemail, LinkedIn mention",
+            "owner": "ai",
+            "reason": "Inbound signals can be ingested and sorted automatically."
+          },
+          "context": {
+            "text": "Services list, standard rates, client fit criteria, past emails, calendar",
+            "owner": "ai",
+            "reason": "Reference documents and calendar data are easily queried by AI."
+          },
+          "decisions": {
+            "text": "Fit: budget over $5k and 10+ staff; Service match: based on their problem; Next step: book call or send guide",
+            "owner": "approve",
+            "reason": "Evaluating fit and recommendations is best reviewed before sending."
+          },
+          "actions": {
+            "text": "Draft reply in Gmail; Log contact in HubSpot; Send booking link; Add prep note to calendar",
+            "owner": "approve",
+            "reason": "Sending outbound emails to prospects should be approved first."
+          },
+          "exceptions": {
+            "text": "Custom pricing questions, upset tone, unclear needs",
+            "owner": "you",
+            "reason": "Edge cases and sensitive inquiries require human judgment."
+          }
+        },
+        "tools": "Gmail, Google Calendar, HubSpot",
+        "shelf": "Voice agent, such as ElevenLabs or HeyGen; Automation tool, such as Zapier, Make, or n8n",
+        "gaps": "Nothing, just connect the tools",
+        "test": "Send a mock form submission from a 15-person company with a $6,000 budget.",
+        "success": "A tailored draft reply is created in Gmail and the contact is logged in HubSpot for your approval."
+      }
+    },
+    {
+      "user": "Thanks.",
+      "say": "Run the mock form submission test this week to see your draft reply and contact record generated.",
+      "stage": "complete",
+      "map": {
+        "task": "Answering new client inquiries",
+        "done": "Useful reply sent, fit booked on calendar",
+        "rows": {
+          "trigger": {
+            "text": "Website form, direct email, voicemail, LinkedIn mention",
+            "owner": "ai",
+            "reason": "Inbound signals can be ingested and sorted automatically."
+          },
+          "context": {
+            "text": "Services list, standard rates, client fit criteria, past emails, calendar",
+            "owner": "ai",
+            "reason": "Reference documents and calendar data are easily queried by AI."
+          },
+          "decisions": {
+            "text": "Fit: budget over $5k and 10+ staff; Service match: based on their problem; Next step: book call or send guide",
+            "owner": "approve",
+            "reason": "Evaluating fit and recommendations is best reviewed before sending."
+          },
+          "actions": {
+            "text": "Draft reply in Gmail; Log contact in HubSpot; Send booking link; Add prep note to calendar",
+            "owner": "approve",
+            "reason": "Sending outbound emails to prospects should be approved first."
+          },
+          "exceptions": {
+            "text": "Custom pricing questions, upset tone, unclear needs",
+            "owner": "you",
+            "reason": "Edge cases and sensitive inquiries require human judgment."
+          }
+        },
+        "tools": "Gmail, Google Calendar, HubSpot",
+        "shelf": "Voice agent, such as ElevenLabs or HeyGen; Automation tool, such as Zapier, Make, or n8n",
+        "gaps": "Nothing, just connect the tools",
+        "test": "Send a mock form submission from a 15-person company with a $6,000 budget.",
+        "success": "A tailored draft reply is created in Gmail and the contact is logged in HubSpot for your approval."
+      }
+    }
+  ]
+}

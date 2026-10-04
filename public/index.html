@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Map One Task</title>
+<meta name="description" content="A live interview that maps one repetitive task into a plan for an AI agent.">
+<link rel="stylesheet" href="./styles.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<div class="shapes" aria-hidden="true">
+  <span class="shape back"></span><span class="shape front"></span><span class="dots"></span><span class="cross"></span>
+  <span class="shape low"></span>
+</div>
+
+<header class="top">
+  <div>
+    <p class="eyebrow">Leland workshop · Live build</p>
+    <h1>Map one task.</h1>
+  </div>
+  <ol class="stages" id="stages" aria-label="Interview progress">
+    <li data-stage="task">Task</li><li data-stage="trigger">Trigger</li><li data-stage="context">Context</li>
+    <li data-stage="decisions">Decisions</li><li data-stage="actions">Actions</li><li data-stage="exceptions">Exceptions</li>
+    <li data-stage="owners">Owners</li><li data-stage="shelf">Shelf</li><li data-stage="test">Test</li>
+  </ol>
+</header>
+
+<main class="stage">
+  <section class="interview" aria-label="Interview">
+    <div class="log" id="log" aria-live="polite"></div>
+    <form id="ask" class="ask">
+      <label for="answer" class="sr-only">Answer</label>
+      <textarea id="answer" rows="2" placeholder="Type the answer…" autocomplete="off"></textarea>
+      <button type="submit" id="send">Send</button>
+    </form>
+    <p class="error" id="error" role="alert"></p>
+  </section>
+
+  <section class="map" aria-label="Agent map">
+    <div class="map-head">
+      <div class="goal"><span class="label">The work</span><p id="task" class="value" data-key="task" contenteditable="plaintext-only" spellcheck="false"></p></div>
+      <div class="goal"><span class="label">Done looks like</span><p id="done" class="value" data-key="done" contenteditable="plaintext-only" spellcheck="false"></p></div>
+      <div class="map-actions" id="map-actions" hidden>
+        <button type="button" id="show-plan">Show the agent plan</button>
+        <button type="button" id="copy-plan" class="secondary">Copy</button>
+      </div>
+    </div>
+    <div class="rows" id="rows"></div>
+    <div class="extras">
+      <div><span class="label">Already have</span><p class="value" data-key="tools" contenteditable="plaintext-only" spellcheck="false"></p></div>
+      <div><span class="label">Off the shelf</span><p class="value" data-key="shelf" contenteditable="plaintext-only" spellcheck="false"></p></div>
+      <div><span class="label">Left to build</span><p class="value" data-key="gaps" contenteditable="plaintext-only" spellcheck="false"></p></div>
+      <div class="first-test"><span class="label">First test</span><p class="value" data-key="test" contenteditable="plaintext-only" spellcheck="false"></p><span class="label pass">Pass if</span><p class="value" data-key="success" contenteditable="plaintext-only" spellcheck="false"></p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>From ChatGPT to AI Workflows</span>
+  <span class="controls">
+    <span id="status" class="status">Checking AI…</span>
+    <button type="button" class="quiet" id="replay">Replay example</button>
+    <button type="button" class="quiet" id="reset">Start over</button>
+  </span>
+</footer>
+
+<dialog id="plan-dialog" aria-labelledby="plan-title">
+  <div class="dialog-head"><h2 id="plan-title">The agent plan</h2><span class="dialog-buttons"><button type="button" id="copy-plan-dialog">Copy</button><button type="button" class="secondary" id="close-plan">Close</button></span></div>
+  <div id="plan-body"></div>
+</dialog>
+</body>
+</html>

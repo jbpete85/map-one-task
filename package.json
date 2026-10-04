@@ -1,0 +1,10 @@
+{
+  "name": "agent-mapper",
+  "private": true,
+  "type": "module",
+  "description": "Live workshop demo: an AI interview that maps one task into an agent plan.",
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.mjs"
+  }
+}
