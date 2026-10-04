@@ -2,6 +2,7 @@ import http from 'node:http';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {timingSafeEqual} from 'node:crypto';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const model = process.env.OPENROUTER_MODEL ?? 'google/gemini-3.8-flash';
@@ -10,10 +11,28 @@ const statePath = path.join(root, 'data/usage.json');
 await fs.mkdir(path.dirname(statePath), {recursive: true});
 let usage = await fs.readFile(statePath, 'utf8').then(JSON.parse).catch(() => ({}));
 let active = 0;
+// Hosted mode (the mini): BASE_PATH mounts the app under a tunnel path, PRESENTER_CODE gates paid calls,
+// and ALLOWED_ORIGINS lets the GitHub Pages copy call the API. Locally, all three are unset.
+const base = (process.env.BASE_PATH ?? '').replace(/\/$/, '');
+const code = process.env.PRESENTER_CODE ?? '';
+const allowedOrigins = (process.env.ALLOWED_ORIGINS ?? '').split(',').map(o => o.trim()).filter(Boolean);
+const hits = new Map();
 
 const day = () => new Date().toLocaleDateString('en-CA', {timeZone: 'America/Chicago'});
 function today() { if (usage.day !== day()) usage = {day: day(), calls: 0, cost: 0}; return usage; }
 const persist = () => fs.writeFile(statePath, JSON.stringify(usage));
+function codeOk(req) {
+  if (!code) return true;
+  const given = Buffer.from(String(req.headers['x-presenter-code'] ?? '')), want = Buffer.from(code);
+  return given.length === want.length && timingSafeEqual(given, want);
+}
+function rateOk(req) {
+  const key = req.headers['cf-connecting-ip'] ?? req.socket.remoteAddress, now = Date.now();
+  if (hits.size > 5000) hits.clear();
+  const recent = (hits.get(key) ?? []).filter(t => now - t < 3600000);
+  if (recent.length >= 120) return false;
+  recent.push(now); hits.set(key, recent); return true;
+}
 function json(res, status, body) { res.writeHead(status, {'Content-Type': 'application/json', 'Cache-Control': 'no-store'}); res.end(JSON.stringify(body)); }
 async function readJson(req) {
   let size = 0; const chunks = [];
@@ -122,13 +141,27 @@ const types = {'.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': '
 export const server = http.createServer(async (req, res) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Content-Security-Policy', "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'");
+  const origin = req.headers.origin;
+  const crossOk = origin && allowedOrigins.includes(origin);
+  if (crossOk) { res.setHeader('Access-Control-Allow-Origin', origin); res.setHeader('Vary', 'Origin'); }
   try {
-    const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-    if (pathname === '/api/status') { json(res, 200, {ready: Boolean(process.env.OPENROUTER_API_KEY), model, spent: today().cost}); return; }
+    let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    if (base) {
+      if (pathname === base) { res.writeHead(302, {Location: base + '/'}); res.end(); return; }
+      if (!pathname.startsWith(base + '/')) { json(res, 404, {error: 'Not found'}); return; }
+      pathname = pathname.slice(base.length);
+    }
+    if (req.method === 'OPTIONS' && pathname.startsWith('/api/')) {
+      if (!crossOk) { res.writeHead(403); res.end(); return; }
+      res.writeHead(204, {'Access-Control-Allow-Methods': 'GET, POST', 'Access-Control-Allow-Headers': 'Content-Type, X-Presenter-Code', 'Access-Control-Max-Age': '600'}); res.end(); return;
+    }
+    if (pathname === '/api/status') { json(res, 200, {ready: Boolean(process.env.OPENROUTER_API_KEY), codeRequired: Boolean(code), model}); return; }
     if (pathname === '/api/turn') {
       if (req.method !== 'POST') { json(res, 405, {error: 'Use POST.'}); return; }
-      const origin = req.headers.origin;
-      if (origin && origin !== `http://${req.headers.host}`) { json(res, 403, {error: 'Request origin is not allowed.'}); return; }
+      const sameOrigin = [`http://${req.headers.host}`, `https://${req.headers.host}`].includes(origin);
+      if (origin && !sameOrigin && !crossOk) { json(res, 403, {error: 'Request origin is not allowed.'}); return; }
+      if (!codeOk(req)) { json(res, 401, {error: 'Enter the presenter code to use the AI.', needCode: true}); return; }
+      if (!rateOk(req)) { json(res, 429, {error: 'Too many requests this hour. Use the replay.'}); return; }
       json(res, 200, await turn(await readJson(req))); return;
     }
     if (req.method !== 'GET' && req.method !== 'HEAD') { json(res, 405, {error: 'Use GET.'}); return; }
@@ -144,5 +177,5 @@ export const server = http.createServer(async (req, res) => {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const port = Number(process.env.PORT ?? 8130);
-  server.listen(port, '127.0.0.1', () => console.log(`Agent mapper: http://localhost:${port}/`));
+  server.listen(port, '127.0.0.1', () => console.log(`Agent mapper: http://localhost:${port}${base}/`));
 }

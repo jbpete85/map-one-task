@@ -95,6 +95,7 @@ button.quiet:hover{color:var(--on-dark)}
 
 .foot{display:flex;justify-content:space-between;align-items:center;gap:24px;font:600 13px Poppins;color:var(--muted-dark);padding-top:8px;padding-bottom:clamp(14px,2vh,22px)}
 .controls{display:flex;gap:24px;align-items:center}
+.code{font:400 14px Raleway,sans-serif;color:var(--on-dark);background:var(--carbon-2);border:1.5px solid var(--blue);border-radius:6px;padding:6px 10px;width:220px}
 .status{font-weight:400;font-family:Raleway}
 .status::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;background:var(--muted-dark)}
 .status.ok::before{background:#4ADE80}.status.replay::before{background:var(--blue)}.status.off::before{background:#F87171}

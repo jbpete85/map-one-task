@@ -4,6 +4,9 @@ const OWNERS = {'': '—', ai: 'AI does it', approve: 'You approve', you: 'You o
 const NEXT_OWNER = {'': 'ai', ai: 'approve', approve: 'you', you: 'ai'};
 const OPENING = 'What is one task you would like off your plate? And what does finished look like?';
 
+// The GitHub Pages copy talks to the hosted server; a local copy talks to its own server
+const API = location.hostname.endsWith('github.io') ? 'https://ops.kingsidegroup.com/agent-mapper/' : './';
+const store = {get: k => { try { return localStorage.getItem(k) ?? ''; } catch { return ''; } }, set: (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch {} }};
 const $ = s => document.querySelector(s);
 const log = $('#log'), answer = $('#answer'), send = $('#send'), error = $('#error'), status = $('#status');
 
@@ -123,10 +126,11 @@ async function submit() {
 }
 
 async function liveTurn() {
-  const res = await fetch('./api/turn', {method: 'POST', headers: {'Content-Type': 'application/json'},
+  const res = await fetch(API + 'api/turn', {method: 'POST', headers: {'Content-Type': 'application/json', 'X-Presenter-Code': store.get('presenter-code')},
     body: JSON.stringify({messages: state.messages, map: state.map, locked: [...state.locked]})})
     .catch(() => { throw new Error('Could not reach the AI. Press Enter to try again, or use Replay example.'); });
   const out = await res.json().catch(() => ({error: 'The server sent back something unreadable.'}));
+  if (out.needCode) { store.set('presenter-code', ''); askForCode(); }
   if (!res.ok) throw new Error(out.error ?? 'Something went wrong. Try again.');
   return out;
 }
@@ -207,12 +211,22 @@ async function copyPlan(btn) {
 }
 $('#copy-plan').addEventListener('click', e => copyPlan(e.target));
 
+function askForCode() {
+  const box = $('#code'); box.hidden = false; box.value = '';
+  status.className = 'status off'; status.textContent = 'Enter the presenter code';
+}
+$('#code').addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || !e.target.value.trim()) return;
+  store.set('presenter-code', e.target.value.trim()); e.target.hidden = true;
+  status.className = 'status ok'; status.textContent = 'AI ready'; error.textContent = ''; answer.focus();
+});
 async function checkStatus() {
   try {
-    const s = await fetch('./api/status').then(r => r.json());
+    const s = await fetch(API + 'api/status').then(r => r.json());
     online = s.ready;
     status.className = `status ${s.ready ? 'ok' : 'off'}`;
     status.textContent = s.ready ? 'AI ready' : 'AI offline · use replay';
+    if (s.ready && s.codeRequired && !store.get('presenter-code')) askForCode();
   } catch {
     // No server behind this page (a static hosted copy): replay only
     online = false; status.className = 'status off'; status.textContent = 'Replay-only copy · click Replay example';
