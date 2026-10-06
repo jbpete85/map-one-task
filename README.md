@@ -2,7 +2,7 @@
 
 A live workshop demo. An AI interviews a volunteer, one question at a time, about one task they want off their plate. Their answers fill in a five-row map: trigger, context, decisions, actions and exceptions. The AI then suggests who owns each step, checks their existing tools before anything new, and proposes a first test. It ends with an agent plan they can copy into ChatGPT or Claude.
 
-**Hosted copy:** https://jbpete85.github.io/map-one-task/. It is live: the page calls a hosted copy of `server.mjs`. No code is needed. Spending is capped at $5 a day and 120 requests an hour per visitor. If the hosted server is unreachable, the page drops to replay only (click **Replay example**).
+**Hosted copy:** https://jbpete85.github.io/map-one-task/. It is replay-only: the AI was turned off after the October 5 workshop, so click **Replay example** to watch a recorded interview. To make it live again, point `API` in `public/app.js` back at the hosted server.
 
 ## Run it live
 

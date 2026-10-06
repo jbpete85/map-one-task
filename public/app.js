@@ -4,8 +4,8 @@ const OWNERS = {'': '—', ai: 'AI does it', approve: 'You approve', you: 'You o
 const NEXT_OWNER = {'': 'ai', ai: 'approve', approve: 'you', you: 'ai'};
 const OPENING = 'What is one task you would like off your plate? And what does finished look like?';
 
-// The GitHub Pages copy talks to the hosted server; a local copy talks to its own server
-const API = location.hostname.endsWith('github.io') ? 'https://ops.kingsidegroup.com/agent-mapper/' : './';
+// The GitHub Pages copy is replay-only since the workshop ended; a local copy talks to its own server
+const API = location.hostname.endsWith('github.io') ? null : './';
 const store = {get: k => { try { return localStorage.getItem(k) ?? ''; } catch { return ''; } }, set: (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch {} }};
 const $ = s => document.querySelector(s);
 const log = $('#log'), answer = $('#answer'), send = $('#send'), error = $('#error'), status = $('#status');
@@ -222,6 +222,7 @@ $('#code').addEventListener('keydown', e => {
 });
 async function checkStatus() {
   try {
+    if (!API) throw new Error('replay-only copy');
     const s = await fetch(API + 'api/status').then(r => r.json());
     online = s.ready;
     status.className = `status ${s.ready ? 'ok' : 'off'}`;
